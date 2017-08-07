@@ -38,7 +38,7 @@ class Radius_client(External_command):
 
     def __init__(self, global_config = {}):
         self.global_config = global_config
-        command = global_config.getdefault('radiusclient', '/usr/local/sbin/radiusclient')
+        command = global_config.getdefault('radiusclient', '/usr/sbin/radiusclient')
         config = global_config.getdefault('radiusclient.conf', None)
         max_workers = global_config.getdefault('max_radiusclients', 20)
         if config != None:
