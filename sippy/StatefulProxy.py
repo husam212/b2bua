@@ -41,6 +41,21 @@ class StatefulProxy:
         via0.genBranch()
         via1 = req.getHF('via')
         req.insertHeaderBefore(via1, SipHeader(name = 'via', body = via0))
+
+        to = req.getHF('to')
+        to0 = to.getBCopy()
+        to0.address.url.setAddr(self.destination)
+        req.replaceHeader(to, SipHeader(name = 'to', body = to0))
+
+        fr0m = req.getHF('from')
+        fr0m0 = fr0m.getBCopy()
+        fr0m0.address.url.setAddr(self.destination)
+        req.replaceHeader(fr0m, SipHeader(name = 'from', body = fr0m0))
+
+        ruri = req.ruri.getCopy()
+        ruri.setAddr(self.destination)
+        req.setRURI(ruri)
+
         req.setTarget(self.destination)
         print req
         self.global_config['_sip_tm'].newTransaction(req, self.recvResponse)
